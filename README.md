@@ -4,6 +4,7 @@
 
 area2routeNameLink.py
 - takes data2.csv with list of areas and yields a file with area_name, route_name, and route_link
+
 routeLink2RouteInfo.py
 - takes data3.csv with list of route_link and yields a file with area_name, route_name, yds_rating, user_rating, climb_type_and_height, first_ascent, description, and protection
 
