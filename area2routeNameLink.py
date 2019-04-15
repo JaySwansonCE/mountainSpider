@@ -6,11 +6,11 @@ class routeSpider(scrapy.Spider):
 	allowed_domains = ['www.mountainproject.com']
 
 	def start_requests(self):
-	with open('data2.csv', 'rt') as allLinks:
-		allLinks = csv.reader(allLinks)
-		for link in allLinks:
-			url = str(*link)
-			yield scrapy.Request(url, self.parse)
+		with open('data2.csv', 'rt') as allLinks:
+			allLinks = csv.reader(allLinks)
+			for link in allLinks:
+				url = str(*link)
+				yield scrapy.Request(url, self.parse)
 	
 	def parse(self, response):
 		count_routes= len(response.xpath('//*[@id="left-nav-route-table"]/tr'))

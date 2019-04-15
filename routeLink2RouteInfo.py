@@ -9,7 +9,7 @@ class routeSpider(scrapy.Spider):
 	#	self.uniqueRouteIds = []
 
 	def start_requests(self):
-		with open('data3.csv', 'rt') as allLinks:
+		with open('allRouteLinks.csv', 'rt') as allLinks:
 			allLinks = csv.reader(allLinks)
 			for link in allLinks:
 				url = str(*link)
@@ -40,8 +40,10 @@ class routeSpider(scrapy.Spider):
 		faList = response.xpath('//*[@id="route-page"]/div/div[3]/div[1]/div[1]/div[1]/table//tr[2]/td[2]/text()').extract()
 		faString = ''.join(str(e) for e in faList)
 
+		count_tiers= len(response.xpath('//*[@id="route-page"]/div/div[1]/div[2]/a'))
+
 		yield {
-				'area_name': response.xpath('//*[@id="route-page"]/div/div[1]/div[2]/a[5]/text()').extract_first(),
+				'area_name': response.xpath('//*[@id="route-page"]/div/div[1]/div[2]/a[' + str(count_tiers) + ']/text()').extract_first(),
 				'route_name': routeString.replace('\n', '')[8:],
 				'yds_rating': response.xpath('//*[@id="route-page"]/div/div[1]/h2/span[1]/text()').extract_first(),
 				'user_rating': count_stars,
@@ -49,9 +51,13 @@ class routeSpider(scrapy.Spider):
 				'first_ascent': faString.replace('\n', '')[40:],
 				'description': descriptionString,
 				'protection': protectionString,
+				'route_url': response.request.url
 			}
 
-
+#//*[@id="climb-area-page"]/div/div[1]/h1/text()
+#//*[@id="climb-area-page"]/div/div[1]/div[2]/a[5]
+#count_tiers= len(response.xpath('//*[@id="route-page"]/div/div[1]/div[2]/a'))
+#//*[@id="route-page"]/div/div[1]/div[2]/a[7]
 
 
 
